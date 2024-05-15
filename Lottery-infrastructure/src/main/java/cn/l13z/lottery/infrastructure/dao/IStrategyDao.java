@@ -1,17 +1,14 @@
 package cn.l13z.lottery.infrastructure.dao;
 
 import cn.l13z.lottery.infrastructure.po.Activity;
+import cn.l13z.lottery.infrastructure.po.Strategy;
 import org.apache.ibatis.annotations.Mapper;
-
 
 /**
  * @author AlfredOrlando
  */
 @Mapper
-public interface IActivityDao {
+public interface IStrategyDao {
 
-   void insert(Activity req);
-
-   Activity queryActivityById(Long activityId);
-
+    Strategy queryStrategy(Long strategyId);
 }
