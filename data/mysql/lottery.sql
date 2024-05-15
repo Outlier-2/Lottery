@@ -70,3 +70,4 @@ create table strategy_detail
     updateTime datetime      null comment '修改时间'
 )
     comment '策略明细';
+alter table strategy_detail add awardSurplusCount int default 0 null comment '奖品剩余库存';
