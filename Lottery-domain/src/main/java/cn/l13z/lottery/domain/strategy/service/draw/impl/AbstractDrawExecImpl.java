@@ -1,20 +1,10 @@
 package cn.l13z.lottery.domain.strategy.service.draw.impl;
 
-import cn.l13z.lottery.domain.strategy.model.aggregates.StrategyRich;
-import cn.l13z.lottery.domain.strategy.model.req.DrawReq;
-import cn.l13z.lottery.domain.strategy.model.res.DrawResult;
-import cn.l13z.lottery.domain.strategy.repository.IStrategyRepository;
 import cn.l13z.lottery.domain.strategy.service.algorithm.IDrawAlgorithm;
 import cn.l13z.lottery.domain.strategy.service.draw.AbstractDrawBase;
 import cn.l13z.lottery.domain.strategy.service.draw.IDrawExec;
-import cn.l13z.lottery.infrastructure.po.Award;
-import cn.l13z.lottery.infrastructure.po.Strategy;
-import cn.l13z.lottery.infrastructure.po.StrategyDetail;
 import com.alibaba.fastjson.JSON;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -36,7 +26,8 @@ public class AbstractDrawExecImpl extends AbstractDrawBase implements IDrawExec 
     @Override
     protected List<String> queryExcludeAwardIds(Long strategyId) {
         List<String> awardList = strategyRepository.queryNoStockStrategyAwardList(strategyId);
-        logger.info("执行抽奖策略 strategyId：{}，无库存排除奖品列表ID集合 awardList：{}", strategyId, JSON.toJSONString(awardList));
+        logger.info("执行抽奖策略 strategyId：{}，无库存排除奖品列表ID集合 awardList：{}", strategyId,
+            JSON.toJSONString(awardList));
         return awardList;
     }
 

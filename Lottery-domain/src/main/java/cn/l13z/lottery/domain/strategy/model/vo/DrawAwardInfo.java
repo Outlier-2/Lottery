@@ -1,5 +1,7 @@
 package cn.l13z.lottery.domain.strategy.model.vo;
 
+import lombok.Data;
+
 /**
  * ClassName: DrawAwardInfo.java <br>
  *
@@ -9,6 +11,7 @@ package cn.l13z.lottery.domain.strategy.model.vo;
  * <p>
  * Modification History: <br> - 2024/5/15 AlfredOrlando 中奖信息类  <br>
  */
+@Data
 public class DrawAwardInfo {
 
     /**
@@ -20,6 +23,10 @@ public class DrawAwardInfo {
      * 奖品名称
      */
     private String awardName;
+
+    private Integer awardType;
+
+    private String awardContent;
 
     public DrawAwardInfo() {
     }
