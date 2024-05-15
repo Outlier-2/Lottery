@@ -12,4 +12,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface IStrategyDetailDao {
 
     List<StrategyDetail> queryStrategyDetailList(Long strategyId);
+
+    int deductStock(StrategyDetail req);
+
+    List<String> queryNoStockStrategyAwardList(Long strategyId);
 }

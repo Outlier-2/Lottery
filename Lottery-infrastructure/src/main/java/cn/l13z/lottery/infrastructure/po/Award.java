@@ -25,7 +25,7 @@ public class Award {
     /**
      * 奖品ID
      */
-    private Long awardId;
+    private String awardId;
     /**
      * 奖品类型（文字描述、兑换码、优惠券、实物奖品暂无）
      */
@@ -41,7 +41,7 @@ public class Award {
     /**
      * 奖品内容「文字描述、Key、码」
      */
-    private Long awardContent;
+    private String awardContent;
     /**
      * 创建时间
      */

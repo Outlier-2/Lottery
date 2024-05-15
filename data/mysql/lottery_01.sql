@@ -1,5 +1,7 @@
 create database lottery_01;
 
+ALTER DATABASE lottery_01 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 use lottery_01;
 -- auto-generated definition
 create table user_take_activity

@@ -10,6 +10,8 @@
         <result column="awardRate" property="awardRate"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
+        <result column="awardSurplusCount" property="awardSurplusCount"/>
+        <result column="awardDesc" property="awardDesc"/>
 
     </resultMap>
 
@@ -18,4 +20,16 @@
         FROM strategy_detail
         WHERE strategyId = #{strategyId}
     </select>
+
+    <select id="queryNoStockStrategyAwardList" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT awardId
+        FROM strategy_detail
+        WHERE strategyId = #{strategyId} AND awardSurplusCount = 0
+    </select>
+
+    <update id="deductStock" parameterType="cn.l13z.lottery.infrastructure.po.StrategyDetail">
+        UPDATE strategy_detail SET awardSurplusCount = awardSurplusCount - 1
+        WHERE strategyId = #{strategyId} AND awardId = #{awardId} AND awardSurplusCount > 0
+    </update>
+
 </mapper>

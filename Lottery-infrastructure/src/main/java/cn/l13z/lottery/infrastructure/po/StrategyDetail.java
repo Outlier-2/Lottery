@@ -44,5 +44,17 @@ public class StrategyDetail {
      * 修改时间
      */
     private Date updateTime;
+    /**
+     * 剩余库存
+     */
+    private Integer remainStock;
+    /**
+     * 奖品描述
+     */
+    private String awardDesc;
+    /**
+     * 剩余库存
+     */
+    private Integer awardSurplusCount;
 
 }

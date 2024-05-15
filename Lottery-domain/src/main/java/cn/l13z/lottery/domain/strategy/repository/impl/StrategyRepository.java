@@ -8,8 +8,10 @@ import cn.l13z.lottery.infrastructure.dao.IStrategyDetailDao;
 import cn.l13z.lottery.infrastructure.po.Award;
 import cn.l13z.lottery.infrastructure.po.Strategy;
 import cn.l13z.lottery.infrastructure.po.StrategyDetail;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Component;
  * <p>
  * Modification History: <br> - 2024/5/15 AlfredOrlando 策略仓储 <br>
  */
+@Slf4j
 @Component
 public class StrategyRepository implements IStrategyRepository {
 
@@ -42,6 +45,22 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public Award queryAwardInfo(String awardId) {
-        return awardDao.queryAwardInfo(awardId);
+        Award award = awardDao.queryAwardInfo(awardId);
+        log.info("queryAwardInfo: " + award);
+        return award;
+    }
+
+    @Override
+    public boolean deductStock(Long strategyId, String awardId) {
+        StrategyDetail req = new StrategyDetail();
+        req.setStrategyId(strategyId);
+        req.setAwardId(awardId);
+        int count = strategyDetailDao.deductStock(req);
+        return count == 1;
+    }
+
+    @Override
+    public List<String> queryNoStockStrategyAwardList(Long strategyId) {
+        return strategyDetailDao.queryNoStockStrategyAwardList(strategyId);
     }
 }

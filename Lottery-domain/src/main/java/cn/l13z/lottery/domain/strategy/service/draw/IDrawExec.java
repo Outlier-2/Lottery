@@ -1,7 +1,7 @@
 package cn.l13z.lottery.domain.strategy.service.draw;
 
 import cn.l13z.lottery.domain.strategy.model.req.DrawReq;
-import cn.l13z.lottery.domain.strategy.model.res.DrawRes;
+import cn.l13z.lottery.domain.strategy.model.res.DrawResult;
 
 /**
  * ClassName:     IDrawExec.java <br>
@@ -15,6 +15,6 @@ import cn.l13z.lottery.domain.strategy.model.res.DrawRes;
  */
 public interface IDrawExec {
 
-    DrawRes doDrawExec(DrawReq args);
+    DrawResult doDrawExec(DrawReq args);
 
 }

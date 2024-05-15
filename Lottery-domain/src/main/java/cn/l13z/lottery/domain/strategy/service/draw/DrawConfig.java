@@ -1,5 +1,6 @@
 package cn.l13z.lottery.domain.strategy.service.draw;
 
+import cn.l13z.lottery.common.Constants;
 import cn.l13z.lottery.domain.strategy.service.algorithm.IDrawAlgorithm;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,17 +18,15 @@ import javax.annotation.Resource;
  */
 public class DrawConfig {
 
+    protected static Map<Integer, IDrawAlgorithm> drawAlgorithmGroup = new ConcurrentHashMap<>();
     @Resource
-    private IDrawAlgorithm defaultRateRandomDrawAlgorithm;
-
+    private IDrawAlgorithm entiretyRateRandomDrawAlgorithm;
     @Resource
     private IDrawAlgorithm singleRateRandomDrawAlgorithm;
 
-    protected static Map<Integer, IDrawAlgorithm> drawAlgorithmMap = new ConcurrentHashMap<>();
-
     @PostConstruct
     public void init() {
-        drawAlgorithmMap.put(1, defaultRateRandomDrawAlgorithm);
-        drawAlgorithmMap.put(2, singleRateRandomDrawAlgorithm);
+        drawAlgorithmGroup.put(Constants.StrategyMode.ENTIRETY.getCode(), entiretyRateRandomDrawAlgorithm);
+        drawAlgorithmGroup.put(Constants.StrategyMode.SINGLE.getCode(), singleRateRandomDrawAlgorithm);
     }
 }
