@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
- * ClassName: DefaultRateRandomDrawAlgorithm.java <br>
+ * ClassName: EntiretyRateRandomDrawAlgorithm.java <br>
  *
  * @author AlfredOrlando <br>
  * <p>
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
  * <p>
  * Modification History: <br> - 2024/5/15 AlfredOrlando 默认随机奖品抽奖算法 <br>
  */
-@Component("defaultRateRandomDrawAlgorithm")
-public class DefaultRateRandomDrawAlgorithm extends BaseAlgorithm {
+@Component("entiretyRateRandomDrawAlgorithm")
+public class EntiretyRateRandomDrawAlgorithm extends BaseAlgorithm {
 
     @Override
     public String randomDraw(Long strategyId, List<String> excludeAwardIds) {
