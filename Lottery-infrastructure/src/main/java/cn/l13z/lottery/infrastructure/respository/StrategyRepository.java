@@ -1,6 +1,9 @@
-package cn.l13z.lottery.domain.strategy.repository.impl;
+package cn.l13z.lottery.infrastructure.respository;
 
 import cn.l13z.lottery.domain.strategy.model.aggregates.StrategyRich;
+import cn.l13z.lottery.domain.strategy.model.vo.AwardBriefVO;
+import cn.l13z.lottery.domain.strategy.model.vo.StrategyBriefVO;
+import cn.l13z.lottery.domain.strategy.model.vo.StrategyDetailBriefVO;
 import cn.l13z.lottery.domain.strategy.repository.IStrategyRepository;
 import cn.l13z.lottery.infrastructure.dao.IAwardDao;
 import cn.l13z.lottery.infrastructure.dao.IStrategyDao;
@@ -8,10 +11,11 @@ import cn.l13z.lottery.infrastructure.dao.IStrategyDetailDao;
 import cn.l13z.lottery.infrastructure.po.Award;
 import cn.l13z.lottery.infrastructure.po.Strategy;
 import cn.l13z.lottery.infrastructure.po.StrategyDetail;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,14 +44,38 @@ public class StrategyRepository implements IStrategyRepository {
     public StrategyRich queryStrategyRich(Long strategyId) {
         Strategy strategy = strategyDao.queryStrategy(strategyId);
         List<StrategyDetail> strategyDetailList = strategyDetailDao.queryStrategyDetailList(strategyId);
-        return new StrategyRich(strategyId, strategy, strategyDetailList);
+
+        StrategyBriefVO strategyBriefVO = new StrategyBriefVO();
+        BeanUtils.copyProperties(strategy, strategyBriefVO);
+
+        List<StrategyDetailBriefVO> strategyDetailBriefVOList = new ArrayList<>();
+        for (StrategyDetail strategyDetail : strategyDetailList) {
+            StrategyDetailBriefVO strategyDetailBriefVO = new StrategyDetailBriefVO();
+            BeanUtils.copyProperties(strategyDetail, strategyDetailBriefVO);
+            strategyDetailBriefVOList.add(strategyDetailBriefVO);
+        }
+
+        return new StrategyRich(strategyId, strategyBriefVO, strategyDetailBriefVOList);
     }
 
     @Override
-    public Award queryAwardInfo(String awardId) {
+    public AwardBriefVO queryAwardInfo(String awardId) {
+
         Award award = awardDao.queryAwardInfo(awardId);
-        log.info("queryAwardInfo: " + award);
-        return award;
+
+        // 可以使用 BeanUtils.copyProperties(award, awardBriefVO)、或者基于ASM实现的Bean-Mapping，但在效率上最好的依旧是硬编码
+        AwardBriefVO awardBriefVO = new AwardBriefVO();
+        awardBriefVO.setAwardId(award.getAwardId());
+        awardBriefVO.setAwardType(award.getAwardType());
+        awardBriefVO.setAwardName(award.getAwardName());
+        awardBriefVO.setAwardContent(award.getAwardContent());
+
+        return awardBriefVO;
+    }
+
+    @Override
+    public List<String> queryNoStockStrategyAwardList(Long strategyId) {
+        return strategyDetailDao.queryNoStockStrategyAwardList(strategyId);
     }
 
     @Override
@@ -59,8 +87,4 @@ public class StrategyRepository implements IStrategyRepository {
         return count == 1;
     }
 
-    @Override
-    public List<String> queryNoStockStrategyAwardList(Long strategyId) {
-        return strategyDetailDao.queryNoStockStrategyAwardList(strategyId);
-    }
 }

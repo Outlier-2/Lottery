@@ -38,12 +38,12 @@
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>cn.l13z</groupId>
-      <artifactId>Lottery-infrastructure</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>cn.l13z</groupId>-->
+<!--      <artifactId>Lottery-infrastructure</artifactId>-->
+<!--      <version>1.0-SNAPSHOT</version>-->
+<!--      <scope>compile</scope>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>cn.l13z</groupId>
       <artifactId>Lottery-common</artifactId>

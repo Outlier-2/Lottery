@@ -31,5 +31,22 @@
         UPDATE strategy_detail SET awardSurplusCount = awardSurplusCount - 1
         WHERE strategyId = #{strategyId} AND awardId = #{awardId} AND awardSurplusCount > 0
     </update>
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO strategy_detail(strategyid, awardid,  awardcount, awardsurpluscount,
+        awardrate, createtime, updatetime)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.strategyId},
+            #{item.awardId},
+
+            #{item.awardCount},
+            #{item.awardSurplusCount},
+            #{item.awardRate},
+            NOW(),
+            NOW()
+            )
+        </foreach>
+    </insert>
 
 </mapper>

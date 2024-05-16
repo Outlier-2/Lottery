@@ -23,4 +23,10 @@
         FROM strategy
         WHERE strategyId = #{strategyId}
     </select>
+    <insert id="insert" parameterType="cn.l13z.lottery.infrastructure.po.Strategy">
+        INSERT INTO strategy(strategyid, strategydesc, strategymode, granttype,
+        grantdate, extinfo, createtime, updatetime)
+        VALUES(#{strategyId}, #{strategyDesc}, #{strategyMode}, #{grantType},
+        #{grantDate}, #{extInfo}, NOW(), NOW())
+    </insert>
 </mapper>

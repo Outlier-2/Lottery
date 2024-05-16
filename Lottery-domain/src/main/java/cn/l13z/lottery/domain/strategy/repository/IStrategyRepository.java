@@ -1,7 +1,7 @@
 package cn.l13z.lottery.domain.strategy.repository;
 
 import cn.l13z.lottery.domain.strategy.model.aggregates.StrategyRich;
-import cn.l13z.lottery.infrastructure.po.Award;
+import cn.l13z.lottery.domain.strategy.model.vo.AwardBriefVO;
 import java.util.List;
 
 /**
@@ -15,10 +15,9 @@ import java.util.List;
  */
 public interface IStrategyRepository {
 
-
     StrategyRich queryStrategyRich(Long strategyId);
 
-    Award queryAwardInfo(String awardId);
+    AwardBriefVO queryAwardInfo(String awardId);
 
     boolean deductStock(Long strategyId, String awardId);
 
