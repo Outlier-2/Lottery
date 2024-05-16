@@ -1,0 +1,22 @@
+package cn.l13z.lottery.domain.support.ids;
+
+/**
+ * ClassName:     IIdGenerator.java <br>
+ *
+ * @author AlfredOrlando <br>
+ * <p>
+ * <p>
+ * Created:  2024-05-16 01:36 <br> Description: ID生成接口 <br>
+ * <p>
+ * Modification History: <br> - 2024/5/16 AlfredOrlando ID生成接口 <br>
+ */
+public interface IIdGenerator {
+
+    /**
+     * 获取ID，目前有两种实现方式 1. 雪花算法，用于生成单号 2. 日期算法，用于生成活动编号类，特性是生成数字串较短，但指定时间内不能生成太多 3. 随机算法，用于生成策略ID
+     *
+     * @return ID
+     */
+    long nextId();
+
+}
