@@ -1,7 +1,9 @@
 package cn.l13z.lottery.domain.activity.service.partake;
 
+import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.domain.activity.model.req.PartakeReq;
 import cn.l13z.lottery.domain.activity.model.res.PartakeResult;
+import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
 
 /**
  * ClassName:     IActivityPartake.java <br>
@@ -22,4 +24,10 @@ public interface IActivityPartake {
      */
     PartakeResult doPartake(PartakeReq partakeReq);
 
+    /**
+     * 保存奖品单
+     * @param drawOrder 奖品单
+     * @return          保存结果
+     */
+    Result recordDrawOrder(DrawOrderVO drawOrder);
 }

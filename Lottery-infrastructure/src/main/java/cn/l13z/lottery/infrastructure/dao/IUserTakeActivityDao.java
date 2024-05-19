@@ -1,5 +1,6 @@
 package cn.l13z.lottery.infrastructure.dao;
 
+import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.infrastructure.po.UserTakeActivity;
 import cn.l13z.middleware.db.router.annotation.DBRouter;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,4 +25,12 @@ public interface IUserTakeActivityDao {
      */
     @DBRouter(key = "uId")
     void insert(UserTakeActivity userTakeActivity);
+
+    /**
+     * 锁定活动领取记录
+     *
+     * @param userTakeActivity  入参
+     * @return                  更新结果
+     */
+    int lockTackActivity(UserTakeActivity userTakeActivity);
 }
