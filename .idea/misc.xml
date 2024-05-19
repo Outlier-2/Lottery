@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/Lottery-application/pom.xml" />
         <option value="$PROJECT_DIR$/Lottery-common/pom.xml" />
+        <option value="$PROJECT_DIR$/db-router-starter/pom.xml" />
       </list>
     </option>
   </component>
