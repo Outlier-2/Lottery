@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.l13z.lottery.infrastructure.dao.IStrategyDao">
+
+    <resultMap id="StrategyMap" type="cn.l13z.lottery.infrastructure.po.Strategy">
+        <id column="id" property="id"/>
+        <result column="strategyId" property="strategyId"/>
+        <result column="strategyDesc" property="strategyDesc"/>
+        <result column="strategyMode" property="strategyMode"/>
+        <result column="grantType" property="grantType"/>
+        <result column="grantDate" property="grantDate"/>
+        <result column="extInfo" property="extInfo"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+
+    </resultMap>
+
+
+    <select id="queryStrategy" parameterType="java.lang.Long" resultType="cn.l13z.lottery.infrastructure.po.Strategy">
+        SELECT
+        id, strategyId, strategyDesc, strategyMode, grantType,
+        grantDate, extInfo , createTime, updateTime
+        FROM strategy
+        WHERE strategyId = #{strategyId}
+    </select>
+    <insert id="insert" parameterType="cn.l13z.lottery.infrastructure.po.Strategy">
+        INSERT INTO strategy(strategyid, strategydesc, strategymode, granttype,
+        grantdate, extinfo, createtime, updatetime)
+        VALUES(#{strategyId}, #{strategyDesc}, #{strategyMode}, #{grantType},
+        #{grantDate}, #{extInfo}, NOW(), NOW())
+    </insert>
+</mapper>
