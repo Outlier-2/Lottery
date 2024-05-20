@@ -14,8 +14,7 @@ public class Constants {
         INDEX_DUP("0003", "主键冲突"),
         NO_UPDATE("0004", "SQL操作无更新"),
         LOSING_DRAW("D001", "未中奖"),
-        ;
-
+        RULE_ERR("D002", "量化人群规则执行失败");
         private final String code;
         private final String info;
 
