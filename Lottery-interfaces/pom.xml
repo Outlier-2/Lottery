@@ -79,6 +79,12 @@
     <!-- MapStruct end -->
 
     <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+    </dependency>
+
+
+    <dependency>
       <groupId>cn.l13z</groupId>
       <artifactId>Lottery-common</artifactId>
       <version>1.0-SNAPSHOT</version>
