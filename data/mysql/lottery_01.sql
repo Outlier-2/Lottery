@@ -13,6 +13,7 @@ create table user_take_activity
     activityName tinytext  null,
     takeDate     timestamp null,
     takeCount    int       null,
+    state        int       null,
     uuid         tinytext  null,
     createTime   timestamp null,
     updateTime   timestamp null
@@ -33,7 +34,83 @@ create table user_take_activity_count
     comment '用户活动参与次数表';
 
 -- auto-generated definition
-create table user_strategy_export_001(id           bigint     null,uId          mediumtext null,activityId   bigint     null,orderId      bigint     null,strategyId   bigint     null,strategyType int        null,grantType    int        null,grantDate    timestamp  null,grantState   int        null,awardId      bigint     null,awardType    int        null,awardName    mediumtext null,awardContent mediumtext null,uuid         mediumtext null,createTime   timestamp  null,updateTime   timestamp  null) comment '用户策略计算结果表';
-create table user_strategy_export_002(id           bigint     null,uId          mediumtext null,activityId   bigint     null,orderId      bigint     null,strategyId   bigint     null,strategyType int        null,grantType    int        null,grantDate    timestamp  null,grantState   int        null,awardId      bigint     null,awardType    int        null,awardName    mediumtext null,awardContent mediumtext null,uuid         mediumtext null,createTime   timestamp  null,updateTime   timestamp  null) comment '用户策略计算结果表';
-create table user_strategy_export_003(id           bigint     null,uId          mediumtext null,activityId   bigint     null,orderId      bigint     null,strategyId   bigint     null,strategyType int        null,grantType    int        null,grantDate    timestamp  null,grantState   int        null,awardId      bigint     null,awardType    int        null,awardName    mediumtext null,awardContent mediumtext null,uuid         mediumtext null,createTime   timestamp  null,updateTime   timestamp  null) comment '用户策略计算结果表';
-create table user_strategy_export_004(id           bigint     null,uId          mediumtext null,activityId   bigint     null,orderId      bigint     null,strategyId   bigint     null,strategyType int        null,grantType    int        null,grantDate    timestamp  null,grantState   int        null,awardId      bigint     null,awardType    int        null,awardName    mediumtext null,awardContent mediumtext null,uuid         mediumtext null,createTime   timestamp  null,updateTime   timestamp  null) comment '用户策略计算结果表';
+create table user_strategy_export_001
+(
+    id           bigint     null,
+    uId          mediumtext null,
+    activityId   bigint     null,
+    orderId      bigint     null,
+    strategyId   bigint     null,
+    mqStatus     int        null,
+    strategyType int        null,
+    grantType    int        null,
+    grantDate    timestamp  null,
+    grantState   int        null,
+    awardId      bigint     null,
+    awardType    int        null,
+    awardName    mediumtext null,
+    awardContent mediumtext null,
+    uuid         mediumtext null,
+    createTime   timestamp  null,
+    updateTime   timestamp  null
+) comment '用户策略计算结果表';
+create table user_strategy_export_002
+(
+    id           bigint     null,
+    uId          mediumtext null,
+    activityId   bigint     null,
+    orderId      bigint     null,
+    strategyId   bigint     null,
+    strategyType int        null,
+    grantType    int        null,
+    grantDate    timestamp  null,
+    grantState   int        null,
+    awardId      bigint     null,
+    mqStatus     int        null,
+    awardType    int        null,
+    awardName    mediumtext null,
+    awardContent mediumtext null,
+    uuid         mediumtext null,
+    createTime   timestamp  null,
+    updateTime   timestamp  null
+) comment '用户策略计算结果表';
+create table user_strategy_export_003
+(
+    id           bigint     null,
+    uId          mediumtext null,
+    activityId   bigint     null,
+    orderId      bigint     null,
+    strategyId   bigint     null,
+    strategyType int        null,
+    mqStatus     int        null,
+    grantType    int        null,
+    grantDate    timestamp  null,
+    grantState   int        null,
+    awardId      bigint     null,
+    awardType    int        null,
+    awardName    mediumtext null,
+    awardContent mediumtext null,
+    uuid         mediumtext null,
+    createTime   timestamp  null,
+    updateTime   timestamp  null
+) comment '用户策略计算结果表';
+create table user_strategy_export_004
+(
+    id           bigint     null,
+    uId          mediumtext null,
+    activityId   bigint     null,
+    orderId      bigint     null,
+    strategyId   bigint     null,
+    mqStatus     int        null,
+    strategyType int        null,
+    grantType    int        null,
+    grantDate    timestamp  null,
+    grantState   int        null,
+    awardId      bigint     null,
+    awardType    int        null,
+    awardName    mediumtext null,
+    awardContent mediumtext null,
+    uuid         mediumtext null,
+    createTime   timestamp  null,
+    updateTime   timestamp  null
+) comment '用户策略计算结果表';

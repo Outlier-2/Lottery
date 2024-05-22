@@ -1,6 +1,8 @@
 package cn.l13z.lottery.test.application;
 
-import cn.l13z.lottery.application.mq.KafkaProducer;
+import cn.l13z.lottery.application.mq.producer.SendLotteryInvoice;
+import cn.l13z.lottery.common.Constants;
+import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,16 +24,28 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class KafkaProducerTest {
 
-    private final Logger logger = LoggerFactory.getLogger(KafkaProducerTest.class);
+    private Logger logger = LoggerFactory.getLogger(KafkaProducerTest.class);
 
     @Resource
-    private KafkaProducer kafkaProducer;
+    private SendLotteryInvoice sendLotteryInvoice;
 
     @Test
     public void test_send() throws InterruptedException {
-        while (true) {
-            kafkaProducer.send("你好，我是参加者001");
-            Thread.sleep(3500);
+
+        InvoiceVO invoice = new InvoiceVO();
+        invoice.setuId("fustack");
+        invoice.setOrderId(String.valueOf(1444540456057864192L));
+        invoice.setAwardId("3");
+        invoice.setAwardType(Constants.AwardType.DESC.getCode());
+        invoice.setAwardName("Code");
+        invoice.setAwardContent("苹果电脑");
+        invoice.setShippingAddress(null);
+        invoice.setExtInfo(null);
+
+        sendLotteryInvoice.sendLotteryInvoice(invoice);
+
+        while (true){
+            Thread.sleep(10000);
         }
     }
 }

@@ -1,6 +1,7 @@
 package cn.l13z.lottery.infrastructure.dao;
 
 import cn.l13z.lottery.common.Result;
+import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
 import cn.l13z.lottery.infrastructure.po.UserTakeActivity;
 import cn.l13z.middleware.db.router.annotation.DBRouter;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,4 +34,6 @@ public interface IUserTakeActivityDao {
      * @return                  更新结果
      */
     int lockTackActivity(UserTakeActivity userTakeActivity);
+
+    UserTakeActivity queryNoConsumedTakeActivityOrder(UserTakeActivity userTakeActivity);
 }

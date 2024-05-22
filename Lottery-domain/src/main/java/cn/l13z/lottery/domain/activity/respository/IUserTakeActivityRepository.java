@@ -2,6 +2,7 @@ package cn.l13z.lottery.domain.activity.respository;
 
 import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
+import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
 import java.util.Date;
 
 /**
@@ -57,4 +58,8 @@ public interface IUserTakeActivityRepository {
      * @param drawOrder 中奖单
      */
     void saveUserStrategyExport(DrawOrderVO drawOrder);
+
+    UserTakeActivityVO queryNoConsumedTakeActivityOrder(Long activityId, String uId);
+
+    void updateInvoiceMqState(String uId, Long orderId, Integer mqState);
 }

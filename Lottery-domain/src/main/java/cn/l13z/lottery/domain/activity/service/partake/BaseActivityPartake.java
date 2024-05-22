@@ -1,10 +1,16 @@
 package cn.l13z.lottery.domain.activity.service.partake;
 
 import cn.l13z.lottery.common.Constants;
+import cn.l13z.lottery.common.Constants.Ids;
+import cn.l13z.lottery.common.Constants.ResponseCode;
 import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.domain.activity.model.req.PartakeReq;
 import cn.l13z.lottery.domain.activity.model.res.PartakeResult;
 import cn.l13z.lottery.domain.activity.model.vo.ActivityBillVO;
+import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
+import cn.l13z.lottery.domain.support.ids.IIdGenerator;
+import java.util.Map;
+import javax.annotation.Resource;
 
 /**
  * ClassName: BaseActivityPartake.java <br>
@@ -16,6 +22,9 @@ import cn.l13z.lottery.domain.activity.model.vo.ActivityBillVO;
  * Modification History: <br> - 2024/5/19 AlfredOrlando 基本活动参与 <br>
  */
 public abstract class BaseActivityPartake extends ActivityPartakeSupport implements IActivityPartake {
+
+    @Resource
+    private Map<Ids, IIdGenerator> idGeneratorMap;
 
     @Override
     public PartakeResult doPartake(PartakeReq partakeReq) {
@@ -47,6 +56,21 @@ public abstract class BaseActivityPartake extends ActivityPartakeSupport impleme
         partakeResult.setStrategyId(activityBillVO.getStrategyId());
         return partakeResult;
     }
+
+    /**
+     * 封装封装结果
+     * @param strategyId 策略ID
+     * @param takeId 领取ID
+     * @return {@link PartakeResult }
+     */
+    private PartakeResult buildPartakeResult(Long strategyId, Long takeId) {
+        PartakeResult partakeResult = new PartakeResult(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getInfo());
+        partakeResult.setStrategyId(strategyId);
+        partakeResult.setTakeId(takeId);
+        return partakeResult;
+    }
+
+    protected abstract UserTakeActivityVO queryNoConsumedTakeActivityOrder(Long activityId, String uId);
 
     /**
      * 活动信息校验处理，把活动库存、状态、日期、个人参与次数

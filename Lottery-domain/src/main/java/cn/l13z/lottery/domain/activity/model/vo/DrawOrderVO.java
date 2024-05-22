@@ -91,8 +91,8 @@ public class DrawOrderVO {
         this.activityId = activityId;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public String getOrderId() {
+        return String.valueOf(orderId);
     }
 
     public void setOrderId(Long orderId) {

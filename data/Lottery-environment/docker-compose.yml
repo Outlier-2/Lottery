@@ -20,3 +20,4 @@ services:
             - "9000:9000"
         environment:
             ZK_HOSTS: zookeeper:2181
+

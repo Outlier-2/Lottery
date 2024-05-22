@@ -2,6 +2,7 @@ package cn.l13z.lottery.infrastructure.respository;
 
 import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
+import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
 import cn.l13z.lottery.domain.activity.respository.IUserTakeActivityRepository;
 import cn.l13z.lottery.infrastructure.dao.IUserStrategyExportDao;
 import cn.l13z.lottery.infrastructure.dao.IUserTakeActivityCountDao;
@@ -88,7 +89,7 @@ public class UserTakeActivityRepository implements IUserTakeActivityRepository {
             UserStrategyExport userStrategyExport = new UserStrategyExport();
             userStrategyExport.setuId(drawOrder.getuId());
             userStrategyExport.setActivityId(drawOrder.getActivityId());
-            userStrategyExport.setOrderId(drawOrder.getOrderId());
+            userStrategyExport.setOrderId(Long.valueOf(drawOrder.getOrderId()));
             userStrategyExport.setStrategyId(drawOrder.getStrategyId());
             userStrategyExport.setStrategyType(drawOrder.getStrategyMode());
             userStrategyExport.setGrantType(drawOrder.getGrantType());
@@ -102,5 +103,36 @@ public class UserTakeActivityRepository implements IUserTakeActivityRepository {
 
             userStrategyExportDao.insert(userStrategyExport);
         }
+
+    @Override
+    public UserTakeActivityVO queryNoConsumedTakeActivityOrder(Long activityId, String uId) {
+
+        UserTakeActivity userTakeActivity = new UserTakeActivity();
+        userTakeActivity.setUuid(uId);
+        userTakeActivity.setActivityId(activityId);
+        UserTakeActivity noConsumedTakeActivityOrder = userTakeActivityDao.queryNoConsumedTakeActivityOrder(userTakeActivity);
+
+        // 未查询到符合的领取单，直接返回 NULL
+        if (null == noConsumedTakeActivityOrder) {
+            return null;
+        }
+
+        UserTakeActivityVO userTakeActivityVO = new UserTakeActivityVO();
+        userTakeActivityVO.setActivityId(noConsumedTakeActivityOrder.getActivityId());
+        userTakeActivityVO.setTakeId(noConsumedTakeActivityOrder.getTakeId());
+        userTakeActivityVO.setStrategyId(noConsumedTakeActivityOrder.getStrategyId());
+        userTakeActivityVO.setState(noConsumedTakeActivityOrder.getState());
+
+        return userTakeActivityVO;
+    }
+
+    @Override
+    public void updateInvoiceMqState(String uId, Long orderId, Integer mqState) {
+        UserStrategyExport userStrategyExport = new UserStrategyExport();
+        userStrategyExport.setuId(uId);
+        userStrategyExport.setOrderId(orderId);
+        userStrategyExport.setMqStatus(mqState);
+        userStrategyExportDao.updateInvoiceMqState(userStrategyExport);
+    }
 
 }

@@ -12,6 +12,7 @@ import java.util.Date;
  * Modification History: <br> - 2024/5/18 AlfredOrlando 用户活动表 <br>
  */
 public class UserTakeActivity {
+
     /**
      * 自增ID
      */
@@ -40,6 +41,11 @@ public class UserTakeActivity {
      * 领取次数
      */
     private Integer takeCount;
+
+    /**
+     * 领取状态
+     **/
+    private Integer state;
     /**
      * 防重ID
      */
@@ -53,6 +59,26 @@ public class UserTakeActivity {
      */
     private Date updateTime;
 
+    /**
+     * 策略ID
+     */
+    private Long strategyId;
+
+    public Long getStrategyId() {
+        return strategyId;
+    }
+
+    public void setStrategyId(Long strategyId) {
+        this.strategyId = strategyId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
