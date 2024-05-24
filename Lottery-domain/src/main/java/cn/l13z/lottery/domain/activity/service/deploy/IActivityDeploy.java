@@ -1,6 +1,8 @@
 package cn.l13z.lottery.domain.activity.service.deploy;
 
 import cn.l13z.lottery.domain.activity.model.req.ActivityConfigReq;
+import cn.l13z.lottery.domain.activity.model.vo.ActivityVO;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,5 +29,11 @@ public interface IActivityDeploy {
      */
     void updateActivity(ActivityConfigReq req);
 
-
+    /**
+     * 扫描待处理的的活动列表
+     *
+     * @param id ID
+     * @return 待处理的活动集合
+     */
+    List<ActivityVO> scanToDoActivityList(Long id);
 }

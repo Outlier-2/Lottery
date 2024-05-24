@@ -21,3 +21,16 @@ services:
         environment:
             ZK_HOSTS: zookeeper:2181
 
+    xxl-job-admin:
+        image: xuxueli/xxl-job-admin:2.3.0
+        container_name: xxl-job-admin
+        ports:
+            - "7397:7397"
+        environment:
+            - PARAMS=--server.port=7397
+            - --spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+            - --spring.datasource.url=jdbc:mysql://106.52.67.250:3306/xxl_job
+            - --spring.datasource.username=root
+            - --spring.datasource.password=123456
+            - --xxl.job.accessToken=xdsl3ewi3al1oehxmo68pqxer
+        restart: always

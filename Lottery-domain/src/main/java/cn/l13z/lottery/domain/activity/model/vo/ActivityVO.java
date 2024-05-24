@@ -12,6 +12,8 @@ import java.util.Date;
  * Modification History: <br> - 2024/5/15 AlfredOrlando  <br>
  */
 public class ActivityVO {
+
+    private Long id;
     /**
      * 活动ID
      */
@@ -83,6 +85,14 @@ public class ActivityVO {
 
     public Date getBeginDateTime() {
         return beginDateTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setBeginDateTime(Date beginDateTime) {

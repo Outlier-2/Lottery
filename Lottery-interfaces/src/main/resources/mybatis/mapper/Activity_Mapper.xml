@@ -4,15 +4,17 @@
 
     <resultMap id="activityMap" type="cn.l13z.lottery.infrastructure.po.Activity">
         <id column="id" property="id"/>
-        <result column="awardId" property="activityId"/>
-        <result column="awardType" property="activityName"/>
-        <result column="strategyId" property="strategyId" />
-        <result column="awardCount" property="activityDesc"/>
-        <result column="awardName" property="beginDateTime"/>
-        <result column="awardContent" property="endDateTime"/>
-        <result column="createTime" property="stockCount"/>
-        <result column="updateTime" property="takeCount"/>
-
+        <result column="activityId" property="activityId"/>
+        <result column="activityName" property="activityName"/>
+        <result column="activityDesc" property="strategyId" />
+        <result column="beginDateTime" property="activityDesc"/>
+        <result column="endDateTime" property="beginDateTime"/>
+        <result column="stockCounttakeCount" property="endDateTime"/>
+        <result column="state" property="stockCount"/>
+        <result column="creator" property="takeCount"/>
+        <result column="createTime" property="state"/>
+        <result column="updateTime" property="creator"/>
+        <result column="strategyId" property="createTime"/>
     </resultMap>
 
 
@@ -44,4 +46,12 @@
         UPDATE activity SET stockCount = stockCount - 1
         WHERE activityId = #{activityId} AND stockCount > 0
     </update>
+
+    <select id="scanToDoActivityList" parameterType="java.lang.Long" resultMap="activityMap">
+        SELECT activityId, activityName, beginDateTime, endDateTime, state, creator
+        FROM activity
+        WHERE id >= #{id} AND state in (4,5)
+        ORDER BY ID ASC
+        LIMIT 10
+    </select>
 </mapper>

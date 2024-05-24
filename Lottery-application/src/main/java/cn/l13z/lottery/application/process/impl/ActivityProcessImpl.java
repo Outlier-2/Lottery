@@ -105,7 +105,6 @@ public class ActivityProcessImpl implements IActivityProcess {
         // 5. 返回结果
         return new DrawProcessResult(Constants.ResponseCode.SUCCESS.getCode(), Constants.ResponseCode.SUCCESS.getInfo(),
             drawAwardInfo);
-
     }
 
     @Override
@@ -158,5 +157,4 @@ public class ActivityProcessImpl implements IActivityProcess {
         invoiceVO.setExtInfo(null);
         return invoiceVO;
     }
-
 }

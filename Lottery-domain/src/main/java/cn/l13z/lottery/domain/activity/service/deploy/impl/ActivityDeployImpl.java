@@ -9,6 +9,7 @@ import cn.l13z.lottery.domain.activity.model.vo.StrategyVO;
 import cn.l13z.lottery.domain.activity.respository.IActivityRepository;
 import cn.l13z.lottery.domain.activity.service.deploy.IActivityDeploy;
 import com.alibaba.fastjson.JSON;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
@@ -65,5 +66,10 @@ public class ActivityDeployImpl implements IActivityDeploy {
     @Override
     public void updateActivity(ActivityConfigReq req) {
         // TODO: 非核心功能后续补充
+    }
+
+    @Override
+    public List<ActivityVO> scanToDoActivityList(Long id) {
+        return activityRepository.scanToDoActivityList(id);
     }
 }
