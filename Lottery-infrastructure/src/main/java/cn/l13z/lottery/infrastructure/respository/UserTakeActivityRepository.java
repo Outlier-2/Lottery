@@ -2,6 +2,7 @@ package cn.l13z.lottery.infrastructure.respository;
 
 import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
+import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
 import cn.l13z.lottery.domain.activity.respository.IUserTakeActivityRepository;
 import cn.l13z.lottery.infrastructure.dao.IUserStrategyExportDao;
@@ -10,7 +11,10 @@ import cn.l13z.lottery.infrastructure.dao.IUserTakeActivityDao;
 import cn.l13z.lottery.infrastructure.po.UserStrategyExport;
 import cn.l13z.lottery.infrastructure.po.UserTakeActivity;
 import cn.l13z.lottery.infrastructure.po.UserTakeActivityCount;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -134,5 +138,25 @@ public class UserTakeActivityRepository implements IUserTakeActivityRepository {
         userStrategyExport.setMqStatus(mqState);
         userStrategyExportDao.updateInvoiceMqState(userStrategyExport);
     }
+
+    @Override
+    public List<InvoiceVO> scanInvoiceMqState() {
+        // 查询发送MQ失败和超时30分钟，未发送MQ的数据
+        List<UserStrategyExport> userStrategyExportList = userStrategyExportDao.scanInvoiceMqState();
+        // 转换对象
+        List<InvoiceVO> invoiceVOList = new ArrayList<>(userStrategyExportList.size());
+        for (UserStrategyExport userStrategyExport : userStrategyExportList) {
+            InvoiceVO invoiceVO = new InvoiceVO();
+            invoiceVO.setuId(userStrategyExport.getuId());
+            invoiceVO.setOrderId(String.valueOf(userStrategyExport.getOrderId()));
+            invoiceVO.setAwardId(userStrategyExport.getAwardId());
+            invoiceVO.setAwardType(userStrategyExport.getAwardType());
+            invoiceVO.setAwardName(userStrategyExport.getAwardName());
+            invoiceVO.setAwardContent(userStrategyExport.getAwardContent());
+            invoiceVOList.add(invoiceVO);
+        }
+        return invoiceVOList;
+    }
+
 
 }

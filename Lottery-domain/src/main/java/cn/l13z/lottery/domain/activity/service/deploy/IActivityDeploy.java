@@ -2,6 +2,7 @@ package cn.l13z.lottery.domain.activity.service.deploy;
 
 import cn.l13z.lottery.domain.activity.model.req.ActivityConfigReq;
 import cn.l13z.lottery.domain.activity.model.vo.ActivityVO;
+import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -36,4 +37,22 @@ public interface IActivityDeploy {
      * @return 待处理的活动集合
      */
     List<ActivityVO> scanToDoActivityList(Long id);
+
+    /**
+     * 更新发货单 MQ 状态
+     *
+     * @param uId     用户ID
+     * @param orderId 订单ID
+     * @param mqState MQ 发送状态
+     */
+    void updateInvoiceMqState(String uId, Long orderId, Integer mqState);
+
+    /**
+     * 扫描发货单 MQ 状态，把未发送 MQ 的单子扫描出来，做补偿
+     *
+     * @param dbCount 指定分库
+     * @param tbCount 指定分表
+     * @return 发货单
+     */
+    List<InvoiceVO> scanInvoiceMqState(int dbCount, int tbCount);
 }

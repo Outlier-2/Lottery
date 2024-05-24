@@ -2,8 +2,10 @@ package cn.l13z.lottery.domain.activity.respository;
 
 import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
+import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
 import java.util.Date;
+import java.util.List;
 
 /**
  * ClassName: IUserTakeActivityRepository.java <br>
@@ -62,4 +64,6 @@ public interface IUserTakeActivityRepository {
     UserTakeActivityVO queryNoConsumedTakeActivityOrder(Long activityId, String uId);
 
     void updateInvoiceMqState(String uId, Long orderId, Integer mqState);
+
+    List<InvoiceVO> scanInvoiceMqState();
 }

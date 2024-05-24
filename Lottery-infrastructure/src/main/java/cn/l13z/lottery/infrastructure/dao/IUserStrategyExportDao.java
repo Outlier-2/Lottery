@@ -3,6 +3,7 @@ package cn.l13z.lottery.infrastructure.dao;
 import cn.l13z.lottery.infrastructure.po.UserStrategyExport;
 import cn.l13z.middleware.db.router.annotation.DBRouter;
 import cn.l13z.middleware.db.router.annotation.DBRouterStrategy;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -39,4 +40,6 @@ public interface IUserStrategyExportDao {
      */
     @DBRouter
     void updateInvoiceMqState(UserStrategyExport userStrategyExport);
+
+    List<UserStrategyExport> scanInvoiceMqState();
 }

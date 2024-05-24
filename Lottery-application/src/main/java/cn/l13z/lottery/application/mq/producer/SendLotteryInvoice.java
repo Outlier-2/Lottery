@@ -22,16 +22,19 @@ import org.springframework.util.concurrent.ListenableFuture;
 @Component
 public class SendLotteryInvoice {
 
-    private Logger logger = LoggerFactory.getLogger(SendLotteryInvoice.class);
+    public final String TOPIC_INVOICE = "lottery_invoice";
+
+    private final Logger logger = LoggerFactory.getLogger(SendLotteryInvoice.class);
 
     @Resource
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    public static final String TOPIC_INVOICE = "lottery_invoice";
-
     public ListenableFuture<SendResult<String, Object>> sendLotteryInvoice(InvoiceVO invoice) {
+
         String objJson = JSON.toJSONString(invoice);
+
         logger.info("发送MQ消息 topic：{} bizId：{} message：{}", TOPIC_INVOICE, invoice.getuId(), objJson);
+
         return kafkaTemplate.send(TOPIC_INVOICE, objJson);
     }
 }

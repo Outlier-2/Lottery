@@ -45,4 +45,10 @@
     UPDATE user_strategy_export SET mqStatus = #{mqStatus}, update_time = now()
     WHERE uId = #{uId} AND orderId = #{orderId}
   </update>
+
+  <select id="scanInvoiceMqState" resultMap="userStrategyExportMap">
+    SELECT uId, orderId, awardId, awardType, awardName, awardContent
+    FROM user_strategy_export
+    WHERE mq_state = 2 OR ( mqstate = 0 AND now() - createTime > 1800000 )
+  </select>
 </mapper>

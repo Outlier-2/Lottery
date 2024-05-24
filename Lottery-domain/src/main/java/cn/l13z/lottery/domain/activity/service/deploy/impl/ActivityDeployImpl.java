@@ -4,10 +4,13 @@ import cn.l13z.lottery.domain.activity.model.aggregation.ActivityConfigRich;
 import cn.l13z.lottery.domain.activity.model.req.ActivityConfigReq;
 import cn.l13z.lottery.domain.activity.model.vo.ActivityVO;
 import cn.l13z.lottery.domain.activity.model.vo.AwardVO;
+import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import cn.l13z.lottery.domain.activity.model.vo.StrategyDetailVO;
 import cn.l13z.lottery.domain.activity.model.vo.StrategyVO;
 import cn.l13z.lottery.domain.activity.respository.IActivityRepository;
+import cn.l13z.lottery.domain.activity.respository.IUserTakeActivityRepository;
 import cn.l13z.lottery.domain.activity.service.deploy.IActivityDeploy;
+import cn.l13z.middleware.db.router.strategy.IDBRouterStrategy;
 import com.alibaba.fastjson.JSON;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +36,12 @@ public class ActivityDeployImpl implements IActivityDeploy {
 
     @Resource
     private IActivityRepository activityRepository;
+
+    @Resource
+    private IUserTakeActivityRepository userTakeActivityRepository;
+
+    @Resource
+    private IDBRouterStrategy dbRouter;
 
     @Override
     public void createActivity(ActivityConfigReq req) {
@@ -72,4 +81,24 @@ public class ActivityDeployImpl implements IActivityDeploy {
     public List<ActivityVO> scanToDoActivityList(Long id) {
         return activityRepository.scanToDoActivityList(id);
     }
+
+    @Override
+    public void updateInvoiceMqState(String uId, Long orderId, Integer mqState) {
+        userTakeActivityRepository.updateInvoiceMqState(uId, orderId, mqState);
+    }
+
+    @Override
+    public List<InvoiceVO> scanInvoiceMqState(int dbCount, int tbCount) {
+        try {
+            // 设置路由
+            dbRouter.setDBKey(dbCount);
+            dbRouter.setTBKey(tbCount);
+
+            // 查询数据
+            return userTakeActivityRepository.scanInvoiceMqState();
+        } finally {
+            dbRouter.clear();
+        }
+    }
+
 }
