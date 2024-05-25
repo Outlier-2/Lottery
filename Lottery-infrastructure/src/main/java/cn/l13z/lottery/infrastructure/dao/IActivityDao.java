@@ -28,4 +28,6 @@ public interface IActivityDao {
      * 待处理的活动集
      */
     List<Activity> scanToDoActivityList(Long id);
+
+    void updateActivityStock(Activity activity);
 }

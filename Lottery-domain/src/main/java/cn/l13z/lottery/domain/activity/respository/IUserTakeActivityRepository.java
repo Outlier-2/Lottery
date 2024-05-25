@@ -1,6 +1,7 @@
 package cn.l13z.lottery.domain.activity.respository;
 
 import cn.l13z.lottery.common.Result;
+import cn.l13z.lottery.domain.activity.model.vo.ActivityPartakeRecordVO;
 import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
 import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
@@ -66,4 +67,6 @@ public interface IUserTakeActivityRepository {
     void updateInvoiceMqState(String uId, Long orderId, Integer mqState);
 
     List<InvoiceVO> scanInvoiceMqState();
+
+    void updateActivityStock(ActivityPartakeRecordVO activityPartakeRecordVO);
 }

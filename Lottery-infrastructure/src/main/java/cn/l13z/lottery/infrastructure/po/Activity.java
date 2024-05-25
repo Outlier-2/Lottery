@@ -31,7 +31,7 @@ public class Activity {
     private Date endDateTime;
 
     //剩余库存
-    private Integer stock_surplus_count;
+    private Integer stockSurplusCount;
 
     // 库存
     private Integer stockCount;
@@ -51,12 +51,12 @@ public class Activity {
     // 修改时间
     private Date updateTime;
 
-    public Integer getStock_surplus_count() {
-        return stock_surplus_count;
+    public Integer getStockSurplusCount() {
+        return stockSurplusCount;
     }
 
-    public void setStock_surplus_count(Integer stock_surplus_count) {
-        this.stock_surplus_count = stock_surplus_count;
+    public void setStockSurplusCount(Integer stockSurplusCount) {
+        this.stockSurplusCount = stockSurplusCount;
     }
 
     public Long getId() {

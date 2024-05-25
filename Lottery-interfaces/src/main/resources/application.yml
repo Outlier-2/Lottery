@@ -47,7 +47,15 @@ spring:
             #listner负责ack，每调用一次，就立即commit
             ack-mode: manual_immediate
             missing-topics-fatal: false
+    redis:
+        host: 106.52.67.250
+        port: 6380
+        database: 0
+        password: 123456*
+        timeout: 3000ms
 
+
+# 多数据源路由配置
 # 多数据源路由配置
 mini-db-router:
     jdbc:
@@ -72,6 +80,7 @@ mini-db-router:
                 url: jdbc:mysql://127.0.0.1:3306/lottery_02?useUnicode=true
                 username: root
                 password: 123456
+
 mybatis:
     mapper-locations: classpath:/mybatis/mapper/*.xml
     config-location: classpath:/mybatis/config/mybatis-config.xml

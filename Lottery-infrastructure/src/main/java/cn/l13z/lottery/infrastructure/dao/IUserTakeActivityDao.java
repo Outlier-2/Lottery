@@ -35,5 +35,6 @@ public interface IUserTakeActivityDao {
      */
     int lockTackActivity(UserTakeActivity userTakeActivity);
 
+    @DBRouter
     UserTakeActivity queryNoConsumedTakeActivityOrder(UserTakeActivity userTakeActivity);
 }

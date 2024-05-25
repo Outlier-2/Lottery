@@ -1,13 +1,16 @@
 package cn.l13z.lottery.infrastructure.respository;
 
 import cn.l13z.lottery.common.Result;
+import cn.l13z.lottery.domain.activity.model.vo.ActivityPartakeRecordVO;
 import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
 import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
 import cn.l13z.lottery.domain.activity.respository.IUserTakeActivityRepository;
+import cn.l13z.lottery.infrastructure.dao.IActivityDao;
 import cn.l13z.lottery.infrastructure.dao.IUserStrategyExportDao;
 import cn.l13z.lottery.infrastructure.dao.IUserTakeActivityCountDao;
 import cn.l13z.lottery.infrastructure.dao.IUserTakeActivityDao;
+import cn.l13z.lottery.infrastructure.po.Activity;
 import cn.l13z.lottery.infrastructure.po.UserStrategyExport;
 import cn.l13z.lottery.infrastructure.po.UserTakeActivity;
 import cn.l13z.lottery.infrastructure.po.UserTakeActivityCount;
@@ -38,6 +41,11 @@ public class UserTakeActivityRepository implements IUserTakeActivityRepository {
 
     @Resource
     private IUserStrategyExportDao userStrategyExportDao;
+
+    @Resource
+    private IActivityDao activityDao;
+
+
 
     @Override
     public int subtractionLeftCount(Long activityId, String activityName, Integer takeCount, Integer userTakeLeftCount,
@@ -158,5 +166,12 @@ public class UserTakeActivityRepository implements IUserTakeActivityRepository {
         return invoiceVOList;
     }
 
+    @Override
+    public void updateActivityStock(ActivityPartakeRecordVO activityPartakeRecordVO) {
+        Activity activity = new Activity();
+        activity.setActivityId(activityPartakeRecordVO.getActivityId());
+        activity.setStockSurplusCount(activityPartakeRecordVO.getStockSurplusCount());
+        activityDao.updateActivityStock(activity);
+    }
 
 }

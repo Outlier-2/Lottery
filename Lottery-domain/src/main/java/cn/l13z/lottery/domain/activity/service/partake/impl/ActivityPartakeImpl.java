@@ -1,17 +1,18 @@
 package cn.l13z.lottery.domain.activity.service.partake.impl;
 
 import cn.l13z.lottery.common.Constants;
-import cn.l13z.lottery.common.Constants.Ids;
 import cn.l13z.lottery.common.Result;
 import cn.l13z.lottery.domain.activity.model.req.PartakeReq;
+import cn.l13z.lottery.domain.activity.model.res.StockResult;
 import cn.l13z.lottery.domain.activity.model.vo.ActivityBillVO;
+import cn.l13z.lottery.domain.activity.model.vo.ActivityPartakeRecordVO;
 import cn.l13z.lottery.domain.activity.model.vo.DrawOrderVO;
+import cn.l13z.lottery.domain.activity.model.vo.InvoiceVO;
 import cn.l13z.lottery.domain.activity.model.vo.UserTakeActivityVO;
 import cn.l13z.lottery.domain.activity.respository.IUserTakeActivityRepository;
 import cn.l13z.lottery.domain.activity.service.partake.BaseActivityPartake;
-import cn.l13z.lottery.domain.support.ids.IIdGenerator;
 import cn.l13z.middleware.db.router.strategy.IDBRouterStrategy;
-import java.util.Map;
+import java.util.List;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * <p>
  * Modification History: <br> - 2024/5/19 AlfredOrlando 默认活动实现 <br>
  */
+
 @Service
 public class ActivityPartakeImpl extends BaseActivityPartake {
 
@@ -37,13 +39,10 @@ public class ActivityPartakeImpl extends BaseActivityPartake {
     private IUserTakeActivityRepository userTakeActivityRepository;
 
     @Resource
-    private Map<Ids, IIdGenerator> idGeneratorMap;
+    private TransactionTemplate transactionTemplate;
 
     @Resource
     private IDBRouterStrategy dbRouter;
-
-    @Resource
-    private TransactionTemplate transactionTemplate;
 
     @Override
     protected UserTakeActivityVO queryNoConsumedTakeActivityOrder(Long activityId, String uId) {
@@ -73,7 +72,7 @@ public class ActivityPartakeImpl extends BaseActivityPartake {
         }
 
         // 校验：个人库存 - 个人活动剩余可领取次数
-        if (bill.getUserTakeLeftCount() <= 0) {
+        if (null != bill.getUserTakeLeftCount() && bill.getUserTakeLeftCount() <= 0) {
             logger.warn("个人领取次数非可用 userTakeLeftCount：{}", bill.getUserTakeLeftCount());
             return Result.buildResult(Constants.ResponseCode.UN_ERROR, "个人领取次数非可用");
         }
@@ -92,7 +91,17 @@ public class ActivityPartakeImpl extends BaseActivityPartake {
     }
 
     @Override
-    protected Result grabActivity(PartakeReq partake, ActivityBillVO bill) {
+    protected StockResult subtractionActivityStockByRedis(String uId, Long activityId, Integer stockCount) {
+        return activityRepository.subtractionActivityStockByRedis(uId, activityId, stockCount);
+    }
+
+    @Override
+    protected void recoverActivityCacheStockByRedis(Long activityId, String tokenKey, String code) {
+        activityRepository.recoverActivityCacheStockByRedis(activityId, tokenKey, code);
+    }
+
+    @Override
+    protected Result grabActivity(PartakeReq partake, ActivityBillVO bill, Long takeId) {
         try {
             dbRouter.doRouter(partake.getuId());
             return transactionTemplate.execute(status -> {
@@ -108,8 +117,7 @@ public class ActivityPartakeImpl extends BaseActivityPartake {
                         return Result.buildResult(Constants.ResponseCode.NO_UPDATE);
                     }
 
-                    // 插入领取活动信息
-                    Long takeId = idGeneratorMap.get(Constants.Ids.SnowFlake).nextId();
+                    // 写入领取活动记录
                     userTakeActivityRepository.takeActivity(bill.getActivityId(), bill.getActivityName(),
                         bill.getTakeCount(), bill.getUserTakeLeftCount(), partake.getuId(), partake.getPartakeDate(),
                         takeId);
@@ -163,6 +171,21 @@ public class ActivityPartakeImpl extends BaseActivityPartake {
         userTakeActivityRepository.updateInvoiceMqState(uId, orderId, mqState);
     }
 
+    public List<InvoiceVO> scanInvoiceMqState(int dbCount, int tbCount) {
+        try {
+            // 设置路由
+            dbRouter.setDBKey(dbCount);
+            dbRouter.setTBKey(tbCount);
 
+            // 查询数据
+            return userTakeActivityRepository.scanInvoiceMqState();
+        } finally {
+            dbRouter.clear();
+        }
+    }
+
+    public void updateActivityStock(ActivityPartakeRecordVO activityPartakeRecordVO) {
+        userTakeActivityRepository.updateActivityStock(activityPartakeRecordVO);
+    }
 
 }

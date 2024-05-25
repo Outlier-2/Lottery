@@ -15,7 +15,7 @@
   <insert id="insert" parameterType="cn.l13z.lottery.infrastructure.po.UserTakeActivityCount">
     INSERT INTO user_take_activity_count
     (
-    uId, activityId, totalCount, leftCount, createTime, updateTime
+    u_id,activity_id,total_count,left_count,create_time,update_time
     )
     VALUES
     (
@@ -24,15 +24,15 @@
   </insert>
 
   <select id="queryUserTakeActivityCount" parameterType="cn.l13z.lottery.infrastructure.po.UserTakeActivityCount" resultMap="userTakeActivityCountMap">
-    SELECT totalCount, leftCount
+    SELECT total_count, left_count
     FROM user_take_activity_count
-    WHERE uId = #{uId} AND activityId = #{activityId}
+    WHERE u_id = #{uId} AND activity_id = #{activityId}
   </select>
 
   <update id="updateLeftCount" parameterType="cn.l13z.lottery.infrastructure.po.UserTakeActivityCount">
     UPDATE user_take_activity_count
-    SET leftCount = leftCount - 1
-    WHERE uId = #{uId} AND activityId = #{activityId} AND leftCount > 0
+    SET left_count = left_count - 1
+    WHERE u_id = #{uId} AND activity_id = #{activityId} AND left_count > 0
   </update>
 
 </mapper>
