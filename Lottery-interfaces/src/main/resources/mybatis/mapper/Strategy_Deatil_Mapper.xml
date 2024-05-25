@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.l13z.lottery.infrastructure.dao.IStrategyDetailDao">
+
+    <resultMap id="StrategyDeatilMap" type="cn.l13z.lottery.infrastructure.po.StrategyDetail">
+        <id column="id" property="id"/>
+        <result column="strategyId" property="strategyId"/>
+        <result column="awardId" property="awardId"/>
+        <result column="awardCount" property="awardCount"/>
+        <result column="awardRate" property="awardRate"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="awardSurplusCount" property="awardSurplusCount"/>
+        <result column="awardDesc" property="awardDesc"/>
+
+    </resultMap>
+
+    <select id="queryStrategyDetailList" parameterType="java.lang.Long" resultType="cn.l13z.lottery.infrastructure.po.StrategyDetail">
+        SELECT id, strategyId, awardId, awardCount, awardRate, createTime, updateTime
+        FROM strategy_detail
+        WHERE strategyId = #{strategyId}
+    </select>
+
+    <select id="queryNoStockStrategyAwardList" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT awardId
+        FROM strategy_detail
+        WHERE strategyId = #{strategyId} AND awardSurplusCount = 0
+    </select>
+
+    <update id="deductStock" parameterType="cn.l13z.lottery.infrastructure.po.StrategyDetail">
+        UPDATE strategy_detail SET awardSurplusCount = awardSurplusCount - 1
+        WHERE strategyId = #{strategyId} AND awardId = #{awardId} AND awardSurplusCount > 0
+    </update>
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO strategy_detail(strategyid, awardid,  awardcount, awardsurpluscount,
+        awardrate, createtime, updatetime)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.strategyId},
+            #{item.awardId},
+
+            #{item.awardCount},
+            #{item.awardSurplusCount},
+            #{item.awardRate},
+            NOW(),
+            NOW()
+            )
+        </foreach>
+    </insert>
+
+</mapper>

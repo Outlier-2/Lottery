@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.l13z.lottery.infrastructure.dao.IUserStrategyExportDao">
+
+  <resultMap id="userStrategyExportMap" type="cn.l13z.lottery.infrastructure.po.UserStrategyExport">
+    <id column="id" property="id"/>
+    <result column="uId" property="uId"/>
+    <result column="activityId" property="activityId"/>
+    <result column="orderId" property="orderId"/>
+    <result column="strategyId" property="strategyId"/>
+    <result column="strategyType" property="strategyType"/>
+    <result column="grantType" property="grantType"/>
+    <result column="grantDate" property="grantDate"/>
+    <result column="grantState" property="grantState"/>
+    <result column="awardId" property="awardId"/>
+    <result column="awardType" property="awardType"/>
+    <result column="awardName" property="awardName"/>
+    <result column="awardContent" property="awardContent"/>
+    <result column="uuid" property="uuid"/>
+    <result column="mqStatus" property="mqStatus"/>
+    <result column="createTime" property="createTime"/>
+    <result column="updateTime" property="updateTime"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="cn.l13z.lottery.infrastructure.po.UserStrategyExport">
+    INSERT INTO user_strategy_export
+    ( uId, activityId, orderId, strategyId,
+    strategyType, grantType, grantDate, grantState, awardId,
+    awardType, awardName, awardContent, uuid, createTime)
+    VALUES
+    (#{uId},#{activityId},#{orderId},#{strategyId},#{strategyType},
+    #{grantType},#{grantDate},#{grantState},#{awardId},#{awardType},
+    #{awardName},#{awardContent}, #{uuid},now())
+  </insert>
+
+  <select id="queryUserStrategyExportByUId" parameterType="java.lang.String" resultMap="userStrategyExportMap">
+    SELECT id, uId, activityId, orderId, strategyId, strategyType,
+    grantType, grantDate, grantState, awardId, awardType,
+    awardName, awardContent, uuid, createTime, updateTime
+    FROM user_strategy_export
+    WHERE uId = #{uId}
+  </select>
+
+  <update id="updateInvoiceMqState" parameterType="cn.l13z.lottery.infrastructure.po.UserStrategyExport">
+    UPDATE user_strategy_export SET mqStatus = #{mqStatus}, update_time = now()
+    WHERE uId = #{uId} AND orderId = #{orderId}
+  </update>
+
+  <select id="scanInvoiceMqState" resultMap="userStrategyExportMap">
+    SELECT uId, orderId, awardId, awardType, awardName, awardContent
+    FROM user_strategy_export
+    WHERE mq_state = 2 OR ( mqstate = 0 AND now() - createTime > 1800000 )
+  </select>
+</mapper>
