@@ -45,9 +45,9 @@ public class StrategyDetail {
      */
     private Date updateTime;
     /**
-     * 奖品描述
+     * 奖品名称
      */
-    private String awardDesc;
+    private String awardName;
     /**
      * 剩余库存
      */

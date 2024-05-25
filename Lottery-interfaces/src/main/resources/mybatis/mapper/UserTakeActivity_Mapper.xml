@@ -3,22 +3,23 @@
 <mapper namespace="cn.l13z.lottery.infrastructure.dao.IUserTakeActivityDao">
   <resultMap id="userTakeActivityMap" type="cn.l13z.lottery.infrastructure.po.UserTakeActivity">
     <id column="id" property="id"/>
-    <result column="uId" property="uId"/>
-    <result column="takeId" property="takeId"/>
-    <result column="activityId" property="activityId"/>
-    <result column="activityName" property="activityName"/>
-    <result column="takeDate" property="takeDate"/>
-    <result column="takeCount" property="takeCount"/>
+    <result column="u_id" property="uId"/>
+    <result column="take_id" property="takeId"/>
+    <result column="activity_id" property="activityId"/>
+    <result column="activity_name" property="activityName"/>
+    <result column="take_date" property="takeDate"/>
+    <result column="take_count" property="takeCount"/>
+    <result column="strategy_id" property="strategyId"/>
     <result column="state" property="state"/>
     <result column="uuid" property="uuid"/>
-    <result column="createTime" property="createTime"/>
-    <result column="updateTime" property="updateTime"/>
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
   </resultMap>
 
   <insert id="insert" parameterType="cn.l13z.lottery.infrastructure.po.UserTakeActivity">
     INSERT INTO user_take_activity
-    (uId, takeId, activityId, activityName, takeDate,
-    takeCount, uuId, createTime, updateTime)
+    (u_id,take_id,activity_id,activity_name,take_date,
+take_count,uuid,create_time,update_time)
     VALUES
     (#{uId}, #{takeId}, #{activityId}, #{activityName}, #{takeDate},
     #{takeCount}, #{uuid}, now(), now())
@@ -26,7 +27,7 @@
 
   <update id="lockTackActivity" parameterType="cn.l13z.lottery.infrastructure.po.UserTakeActivity">
     UPDATE user_take_activity SET state = 1
-    WHERE uId = #{uId} AND activityId = #{activityId} AND state = 0
+    WHERE uId = #{uId} AND activity_id = #{activityId} AND state = 0
   </update>
 
   <select id="queryNoConsumedTakeActivityOrder" parameterType="cn.l13z.lottery.infrastructure.po.UserTakeActivity" resultMap="userTakeActivityMap">

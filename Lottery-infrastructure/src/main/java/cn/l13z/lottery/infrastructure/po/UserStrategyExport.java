@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class UserStrategyExport {
 
-    private Integer mqStatus;
+    private Integer mqState;
     /**
      * 自增ID
      */
@@ -208,10 +208,10 @@ public class UserStrategyExport {
     }
 
     public Integer getMqStatus() {
-        return mqStatus;
+        return mqState;
     }
 
-    public void setMqStatus(Integer mqStatus) {
-        this.mqStatus = mqStatus;
+    public void setMqStatus(Integer qState) {
+        this.mqState = mqState;
     }
 }

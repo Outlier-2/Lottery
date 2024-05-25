@@ -4,13 +4,12 @@
 
     <resultMap id="AwardMap" type="cn.l13z.lottery.infrastructure.po.Award">
         <id column="id" property="id"/>
-        <result column="awardId" property="awardId"/>
-        <result column="awardType" property="awardType"/>
-        <result column="awardCount" property="awardCount"/>
-        <result column="awardName" property="awardName"/>
-        <result column="awardContent" property="awardContent"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
+        <result column="award_id" property="awardId"/>
+        <result column="award_type" property="awardType"/>
+        <result column="award_name" property="awardName"/>
+        <result column="award_content" property="awardContent"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <select id="queryAwardInfo" parameterType="java.lang.String" resultType="cn.l13z.lottery.infrastructure.po.Award">
